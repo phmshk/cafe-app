@@ -1,0 +1,27 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: lemonade --default, forest;
+}
+
+@layer components {
+  h1 {
+    @apply text-4xl;
+  }
+
+  h2 {
+    @apply text-2xl;
+  }
+
+  h3 {
+    @apply text-primary-content text-lg;
+  }
+
+  h1,
+  h2 {
+    @apply text-primary font-bold;
+  }
+
+  p {
+    @apply text-base-content text-base;
+  }
+}

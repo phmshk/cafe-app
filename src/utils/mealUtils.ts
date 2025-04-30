@@ -1,0 +1,23 @@
+import { Meal } from "../types/meal";
+
+export function getMealIngredients(
+  meal: Meal | null,
+  maxCount: number = 20
+): String[] {
+  const mealIngredients: String[] = [];
+
+  if (!meal) return mealIngredients;
+
+  for (let i = 1; i <= 20; i++) {
+    const ingredient = meal[`strIngredient${i}`];
+    if (ingredient) {
+      mealIngredients.push(ingredient);
+    }
+  }
+
+  if (mealIngredients.length > maxCount) {
+    return mealIngredients.slice(0, maxCount);
+  }
+
+  return mealIngredients;
+}

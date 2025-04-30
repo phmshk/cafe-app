@@ -1,14 +1,18 @@
+import { FC } from "react";
 import useMealData from "../hooks/useMealData";
-import getMealIngredients from "../utils/getMealIngredients";
+import { getMealIngredients } from "../utils/mealUtils";
 
-function Meal({ mealId }) {
+interface MealProps {
+  mealId: string;
+}
+
+const Meal: FC<MealProps> = ({ mealId }) => {
   const { meal, isLoading, error } = useMealData(mealId);
+  const ingredients = getMealIngredients(meal, 4);
 
   if (isLoading) return <div>Loading data...</div>;
-  if (error) return <div>An Error Occured: {error.message}</div>;
+  if (error) return <div>An Error Occured: {error}</div>;
   if (!meal) return <div>No meal found</div>;
-
-  const ingredients = getMealIngredients(meal, 3);
 
   return (
     <div className="card card-side bg-base-100 shadow-sm max-w-md flex">
@@ -24,6 +28,6 @@ function Meal({ mealId }) {
       </div>
     </div>
   );
-}
+};
 
 export default Meal;

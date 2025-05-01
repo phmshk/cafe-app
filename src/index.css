@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: lemonade --default, forest;
+  themes: light;
 }
 
 @layer components {
@@ -13,7 +13,7 @@
   }
 
   h3 {
-    @apply text-primary-content text-lg font-medium;
+    @apply text-shadow-base-content text-lg font-medium;
   }
 
   h1,
@@ -23,5 +23,42 @@
 
   p {
     @apply text-base-content text-base;
+  }
+
+  .modal-overlay {
+    @apply fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-black/50;
+
+    .modal-content {
+      @apply relative w-11/12 bg-base-100 rounded-lg p-5;
+    }
+
+    .mobile-modal-card {
+      animation: slideUp 0.4s ease;
+      &.closing {
+        animation: slideDown 0.4s ease;
+      }
+    }
+  }
+
+  .scrolling-disabled {
+    overflow: hidden;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
   }
 }

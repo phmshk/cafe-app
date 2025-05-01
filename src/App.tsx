@@ -1,11 +1,11 @@
-import Meal from "./components/Meal";
+import MealCard from "./components/MealCard";
 
 function App() {
   return (
     <>
-      <Meal mealId={"52839"} />
-      <Meal mealId={"52796"} />
-      <Meal mealId={"52835"} />
+      <MealCard mealId={"52796"} />
+      <MealCard mealId={"53064"} />
+      <MealCard mealId={"52844"} />
     </>
   );
 }

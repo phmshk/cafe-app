@@ -1,4 +1,5 @@
 import { Meal } from "../types/meal";
+import { faker } from "@faker-js/faker";
 
 export function getMealIngredients(
   meal: Meal | null,
@@ -20,4 +21,16 @@ export function getMealIngredients(
   }
 
   return mealIngredients;
+}
+
+export function setMealPrice(meal: Meal): Meal {
+  return {
+    ...meal,
+    mealPrice: faker.commerce.price({
+      min: 5,
+      max: 15,
+      dec: 2,
+      symbol: "€",
+    }),
+  };
 }

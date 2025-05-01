@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchMealData } from "../API/mealService";
 import { Meal } from "../types/meal";
+import { setMealPrice } from "../utils/mealUtils";
 
 interface UseMealDataResult {
   meal: Meal | null;
@@ -17,7 +18,8 @@ function useMealData(mealId: string): UseMealDataResult {
     async function loadMeal() {
       try {
         const mealData = await fetchMealData(mealId);
-        setMeal(mealData);
+        const mealWithPrice = setMealPrice(mealData);
+        setMeal(mealWithPrice);
       } catch (error) {
         setError(error instanceof Error ? error.message : String(error));
       } finally {

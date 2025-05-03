@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: light;
+  themes: light, dark;
 }
 
 @layer components {
@@ -30,18 +30,25 @@
 
     .modal-content {
       @apply relative w-11/12 bg-base-100 rounded-lg p-5;
+      animation: slideUp 0.4s ease;
     }
 
-    .mobile-modal-card {
-      animation: slideUp 0.4s ease;
-      &.closing {
-        animation: slideDown 0.4s ease;
-      }
+    .closing {
+      animation: slideDown 0.4s ease;
     }
   }
 
   .scrolling-disabled {
     overflow: hidden;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 

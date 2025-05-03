@@ -1,8 +1,9 @@
 import { FC, useEffect, useState } from "react";
 import useMealData from "../hooks/useMealData";
-import ResponsiveModal from "./Modal/ResponsiveModal";
-import MobileModalContent from "./Modal/MobileModalContent";
-import DesktopModalContent from "./Modal/DesktopModalContent";
+import Modal from "./Modal/Modal";
+import MobileModalContent from "./MealModal/MobileModalContent";
+import DesktopModalContent from "./MealModal/DesktopModalContent";
+import LoadingSpinner from "./LoadingSpinner";
 
 interface MealProps {
   mealId: string;
@@ -26,7 +27,7 @@ const MealCard: FC<MealProps> = ({ mealId }) => {
     setIsModalOpen(false);
   };
 
-  if (isLoading) return <div>Loading data...</div>;
+  if (isLoading) return <LoadingSpinner />;
   if (error) return <div>An Error Occured: {error}</div>;
   if (!meal) return <div>No meal found</div>;
 
@@ -43,30 +44,32 @@ const MealCard: FC<MealProps> = ({ mealId }) => {
             className="rounded-xl"
           />
         </figure>
-        <div className="card-body items-left text-left">
-          <p className="text-accent text-xl">{meal.mealPrice}</p>
-          <h2 className="card-title">{meal.strMeal}</h2>
-          <div className="card-actions">
-            <button
-              className="btn btn-primary w-full"
-              onClick={(e) => e.stopPropagation()}
-            >
-              + Add to Cart
-            </button>
+        <div className="card-body items-left text-left flex flex-col">
+          <h2 className="card-title line-clamp-2">{meal.strMeal}</h2>
+          <div className="mt-auto">
+            <p className="text-accent text-xl mb-0.5">{meal.mealPrice}</p>
+            <div className="card-actions">
+              <button
+                className="btn btn-primary w-full"
+                onClick={(e) => e.stopPropagation()}
+              >
+                + Add to Cart
+              </button>
+            </div>
           </div>
         </div>
       </div>
-      <ResponsiveModal
+      <Modal
         isOpen={isModalOpen}
         isMobileDevice={isMobileDevice}
-        onClose={onClose}
+        onClick={onClose}
       >
         {isMobileDevice ? (
-          <MobileModalContent meal={meal} onClose={onClose} />
+          <MobileModalContent meal={meal} onClick={onClose} />
         ) : (
           <DesktopModalContent meal={meal} />
         )}
-      </ResponsiveModal>
+      </Modal>
     </>
   );
 };

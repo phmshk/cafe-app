@@ -1,11 +1,10 @@
-import MealCard from "./components/MealCard";
-
+import Header from "./components/Header";
+import Order from "./pages/Order";
 function App() {
   return (
     <>
-      <MealCard mealId={"52796"} />
-      <MealCard mealId={"53064"} />
-      <MealCard mealId={"52844"} />
+      <Header />
+      <Order />
     </>
   );
 }

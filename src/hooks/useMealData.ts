@@ -1,38 +1,24 @@
-import { useEffect, useState } from "react";
 import { fetchMealData } from "../API/mealService";
 import { Meal } from "../types/meal";
 import { setMealPrice } from "../utils/mealUtils";
+import useFetchData from "./useFetchData";
 
-interface UseMealDataResult {
+type UseMealDataResult = {
   meal: Meal | null;
   isLoading: boolean;
   error: string | null;
-}
+};
 
 function useMealData(mealId: string): UseMealDataResult {
-  const [meal, setMeal] = useState<Meal | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const loadMealData = async (id: string) => {
+    const mealData = await fetchMealData(id);
+    const mealWithPrice = setMealPrice(mealData);
+    return mealWithPrice;
+  };
 
-  useEffect(() => {
-    async function loadMeal() {
-      try {
-        const mealData = await fetchMealData(mealId);
-        const mealWithPrice = setMealPrice(mealData);
-        setMeal(mealWithPrice);
-      } catch (error) {
-        setError(error instanceof Error ? error.message : String(error));
-      } finally {
-        setIsLoading(false);
-      }
-    }
+  const { data, isLoading, error } = useFetchData(loadMealData, mealId);
 
-    if (mealId) {
-      loadMeal();
-    }
-  }, [mealId]);
-
-  return { meal, isLoading, error };
+  return { meal: data, isLoading, error };
 }
 
 export default useMealData;

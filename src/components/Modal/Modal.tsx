@@ -1,24 +1,26 @@
 import { FC, ReactNode, useEffect } from "react";
 import ReactDOM from "react-dom";
 
-interface ResponsiveModalProps {
+interface ModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClick: () => void;
   children: ReactNode;
-  isMobileDevice: boolean;
+  isMobileDevice?: boolean;
+  modalContentStyles?: string;
 }
 
-const ResponsiveModal: FC<ResponsiveModalProps> = ({
+const Modal: FC<ModalProps> = ({
   isOpen,
-  onClose,
+  onClick,
   children,
   isMobileDevice,
+  modalContentStyles,
 }) => {
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
-        onClose();
+        onClick();
       }
     };
 
@@ -28,11 +30,11 @@ const ResponsiveModal: FC<ResponsiveModalProps> = ({
     }
 
     return () => document.removeEventListener("keydown", handleEsc);
-  }, [isOpen, onClose]);
+  }, [isOpen, onClick]);
 
   const handleOverlayClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
-      onClose();
+      onClick();
     }
   };
 
@@ -49,10 +51,10 @@ const ResponsiveModal: FC<ResponsiveModalProps> = ({
 
   return ReactDOM.createPortal(
     <div className="modal-overlay" onClick={handleOverlayClick}>
-      <div className="modal-content">{children}</div>
+      <div className={`modal-content ${modalContentStyles}`}>{children}</div>
     </div>,
     document.getElementById("modal-root")!
   );
 };
 
-export default ResponsiveModal;
+export default Modal;

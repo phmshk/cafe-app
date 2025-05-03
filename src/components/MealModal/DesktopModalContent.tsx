@@ -13,8 +13,8 @@ const DesktopModalContent: FC<DesktopModalContentProps> = ({ meal }) => {
   const decreaseCount = () => setCounter((count) => count - 1);
 
   return (
-    <div className="card card-side bg-base-100 shadow-sm ">
-      <figure>
+    <div className="card card-side bg-base-100 shadow-sm">
+      <figure className="max-w-80">
         <img src={meal.strMealThumb + "/large"} alt={meal.strMeal} />
       </figure>
       <div className="card-body">

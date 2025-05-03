@@ -4,10 +4,10 @@ import { getMealIngredients } from "../../utils/mealUtils";
 
 interface MobileModalContentProps {
   meal: Meal;
-  onClose: () => void;
+  onClick: () => void;
 }
 
-const MobileModalContent: FC<MobileModalContentProps> = ({ meal, onClose }) => {
+const MobileModalContent: FC<MobileModalContentProps> = ({ meal, onClick }) => {
   const ingredients = getMealIngredients(meal).join(", ");
   const modalRef = useRef<HTMLDivElement>(null);
   const [counter, setCounter] = useState(1);
@@ -20,7 +20,7 @@ const MobileModalContent: FC<MobileModalContentProps> = ({ meal, onClose }) => {
 
     modalRef.current.classList.add("closing");
     setTimeout(() => {
-      onClose();
+      onClick();
     }, 390);
   };
 

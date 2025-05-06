@@ -34,3 +34,7 @@ export function setMealPrice(meal: Meal): Meal {
     }),
   };
 }
+
+export function getMealCategories(meals: Meal[]): string[] {
+  return meals.map((meal) => meal.strCategory);
+}

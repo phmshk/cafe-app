@@ -7,7 +7,7 @@ export async function fetchMealData(mealId: string): Promise<Meal> {
   );
 
   if (!response.data.meals?.[0]) {
-    throw new Error("Meal not found.");
+    throw new Error(`Meal ${mealId} does not exist.`);
   }
 
   return response.data.meals[0];
@@ -19,7 +19,7 @@ export async function fetchMealsByArea(area: string): Promise<Meal[]> {
   );
 
   if (!response.data.meals) {
-    throw new Error("Area not found.");
+    throw new Error(`No meals found for this area: ${area}`);
   }
 
   return response.data.meals;

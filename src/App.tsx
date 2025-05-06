@@ -4,7 +4,7 @@ function App() {
   return (
     <>
       <Header />
-      <Order />
+      <Order mealsOrigin={"Italian"} />
     </>
   );
 }

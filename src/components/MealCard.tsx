@@ -1,16 +1,14 @@
 import { FC, useEffect, useState } from "react";
-import useMealData from "../hooks/useMealData";
 import Modal from "./Modal/Modal";
 import MobileModalContent from "./MealModal/MobileModalContent";
 import DesktopModalContent from "./MealModal/DesktopModalContent";
-import LoadingSpinner from "./LoadingSpinner";
+import { Meal } from "../types/meal";
 
 interface MealProps {
-  mealId: string;
+  meal: Meal;
 }
 
-const MealCard: FC<MealProps> = ({ mealId }) => {
-  const { meal, isLoading, error } = useMealData(mealId);
+const MealCard: FC<MealProps> = ({ meal }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobileDevice, setIsMobileDevice] = useState(true);
 
@@ -26,10 +24,6 @@ const MealCard: FC<MealProps> = ({ mealId }) => {
     document.body.classList.toggle("scrolling-disabled");
     setIsModalOpen(false);
   };
-
-  if (isLoading) return <LoadingSpinner />;
-  if (error) return <div>An Error Occured: {error}</div>;
-  if (!meal) return <div>No meal found</div>;
 
   return (
     <>

@@ -15,7 +15,6 @@ function useMealData(mealId: string): UseMealDataResult {
     const mealWithPrice = setMealPrice(mealData);
     return mealWithPrice;
   };
-
   const { data, isLoading, error } = useFetchData(loadMealData, mealId);
 
   return { meal: data, isLoading, error };

@@ -7,16 +7,17 @@ type UseFetchDataResult<T> = {
 };
 
 function useFetchData<T>(
-  fetchFunction: (params?: any) => Promise<T>,
-  params?: unknown
+  fetchFunction: (params: string) => Promise<T>,
+  params: string
 ): UseFetchDataResult<T> {
   const [data, setData] = useState<T | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
+        setIsLoading(true);
         const result = await fetchFunction(params);
         setData(result);
       } catch (error) {
@@ -27,7 +28,7 @@ function useFetchData<T>(
     }
 
     fetchData();
-  }, []);
+  }, [fetchFunction, params]);
 
   return { data, isLoading, error };
 }

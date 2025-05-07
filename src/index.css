@@ -41,6 +41,15 @@
   .scrolling-disabled {
     overflow: hidden;
   }
+
+  .gradient {
+    background: #b06d89;
+    background: radial-gradient(
+      circle,
+      rgba(176, 109, 137, 1) 0%,
+      rgba(223, 233, 148, 1) 100%
+    );
+  }
 }
 
 @keyframes fadeIn {

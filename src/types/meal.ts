@@ -13,3 +13,7 @@ export interface Meal {
 export interface MealApiResponse {
   meals: Meal[] | null;
 }
+
+export type SortedMealsObj = {
+  [key: string]: Meal[];
+};

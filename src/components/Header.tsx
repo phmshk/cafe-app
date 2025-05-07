@@ -6,10 +6,9 @@ import SidePanel from "./SidePanel";
 
 const Header: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const onClick = () => {
-    document.body.classList.toggle("scrolling-disabled");
     setIsModalOpen(false);
+    document.body.classList.toggle("scrolling-disabled");
   };
 
   return (
@@ -38,7 +37,7 @@ const Header: FC = () => {
         <Modal
           isOpen={isModalOpen}
           onClick={onClick}
-          modalContentStyles="cart-modal absolute top-16 right-28 max-w-1/5"
+          modalContentStyles="absolute top-16 right-28 max-w-1/5"
         >
           <SidePanel title="Cart">
             <div></div>

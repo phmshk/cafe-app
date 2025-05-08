@@ -12,7 +12,7 @@ const Header: FC = () => {
   };
 
   return (
-    <div className="navbar bg-base-100 shadow-sm flex justify-between items-center">
+    <div className="navbar bg-base-100 shadow-sm flex justify-between items-center fixed top-0 left-0 right-0 z-10">
       <div className="flex gap-8 justify-between items-center">
         <div>
           <a href="#" className="text-xl cursor-pointer">

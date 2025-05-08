@@ -77,7 +77,11 @@ const Menu: FC<MenuProps> = ({ origin, meals, categories }) => {
         </div>
 
         {categories.map((category) => (
-          <div key={category} className="mb-8">
+          <div
+            key={category}
+            className="mb-8 scroll-mt-20"
+            id={category.toLocaleLowerCase()}
+          >
             <h3 className="text-xl font-bold my-4">{category}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto">
               {meals[category].map((meal) => (

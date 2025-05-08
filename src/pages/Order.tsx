@@ -24,6 +24,15 @@ const Order: FC<OrderProps> = ({ mealsOrigin }) => {
     }
   }, [meals]);
 
+  const scrollIntoSection = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    category: string
+  ) => {
+    if (e.currentTarget.innerText.toLocaleLowerCase() === category) {
+      document.getElementById(category)?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -35,21 +44,26 @@ const Order: FC<OrderProps> = ({ mealsOrigin }) => {
   }
 
   return (
-    <Wrapper>
-      <div className="grid grid-cols-[1fr_2fr_1fr] gap-4 py-4">
-        <SidePanel title="Categories">
-          <OrderCategories categories={categories} />
-        </SidePanel>
-        <Menu
-          origin={mealsOrigin}
-          meals={sortedMeals}
-          categories={categories}
-        />
-        <SidePanel title="Cart">
-          <div></div>
-        </SidePanel>
-      </div>
-    </Wrapper>
+    <div className="mt-16">
+      <Wrapper>
+        <div className="flex gap-4 py-4 relative">
+          <SidePanel title="Categories">
+            <OrderCategories
+              categories={categories}
+              onClick={scrollIntoSection}
+            />
+          </SidePanel>
+          <Menu
+            origin={mealsOrigin}
+            meals={sortedMeals}
+            categories={categories}
+          />
+          <SidePanel title="Cart">
+            <div></div>
+          </SidePanel>
+        </div>
+      </Wrapper>
+    </div>
   );
 };
 

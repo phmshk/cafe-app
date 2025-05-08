@@ -2,15 +2,21 @@ import { FC } from "react";
 
 interface OrderCategoriesProps {
   categories: string[];
+  onClick: (e: React.MouseEvent<HTMLButtonElement>, str: string) => void;
 }
 
-const OrderCategories: FC<OrderCategoriesProps> = ({ categories }) => {
+const OrderCategories: FC<OrderCategoriesProps> = ({ categories, onClick }) => {
   return (
     <>
-      <ul className="bg-base-300">
+      <ul>
         {categories.map((category) => (
-          <li key={category} className="m-4 cursor-pointer">
-            {category}
+          <li key={category}>
+            <button
+              className="my-2 text-left p-2 rounded-xl w-full cursor-pointer hover:bg-base-100 overflow-y-auto"
+              onClick={(e) => onClick(e, category.toLocaleLowerCase())}
+            >
+              {category}
+            </button>
           </li>
         ))}
       </ul>

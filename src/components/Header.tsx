@@ -39,9 +39,7 @@ const Header: FC = () => {
           onClick={onClick}
           modalContentStyles="absolute top-16 right-28 max-w-1/5"
         >
-          <SidePanel title="Cart">
-            <div></div>
-          </SidePanel>
+          <div>Cart</div>
         </Modal>
         <div role="button" className="btn btn-outline">
           Log In

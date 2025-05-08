@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <Header />
-      <Order mealsOrigin={"Canadian"} />
+      <Order mealsOrigin={"Italian"} />
       <Footer />
     </>
   );

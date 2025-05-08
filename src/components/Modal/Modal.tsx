@@ -50,7 +50,7 @@ const Modal: FC<ModalProps> = ({
   }
 
   return ReactDOM.createPortal(
-    <div className="modal-overlay" onClick={handleOverlayClick}>
+    <div className="modal-overlay z-11" onClick={handleOverlayClick}>
       <div className={`modal-content ${modalContentStyles}`}>{children}</div>
     </div>,
     document.getElementById("modal-root")!

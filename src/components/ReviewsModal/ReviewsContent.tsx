@@ -60,7 +60,7 @@ const ReviewsContent: FC<ReviewsContentProps> = ({
           <h2>Reviews</h2>
           <select
             name="reviews"
-            className="bg-base-300 rounded-2xl px-4 py-2"
+            className="bg-base-300 rounded-2xl px-4 py-2 cursor-pointer"
             value={sortType}
             onChange={(e) => setSortType(e.target.value)}
           >

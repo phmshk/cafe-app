@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Menu from "../components/Order/Menu";
 import SidePanel from "../components/SidePanel";
 import Wrapper from "../components/Wrapper";
@@ -23,38 +23,6 @@ const Order: FC<OrderProps> = ({ mealsOrigin }) => {
       setCategories([...new Set(getMealCategories(meals))]);
     }
   }, [meals]);
-
-  const elementsRef = useRef<HTMLElement[]>([]);
-  const [visibleCategory, setVisibleCategory] = useState<string>("");
-
-  const addToObserve = (
-    el: HTMLElement,
-    refArr: React.RefObject<HTMLElement[]>
-  ) => {
-    if (el && !refArr.current.includes(el)) {
-      refArr.current.push(el);
-    }
-  };
-
-  const observerCallback = (entries: IntersectionObserverEntry[]) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) setVisibleCategory(entry.target.id);
-    });
-  };
-
-  const options = {
-    rootMargin: "100px 0px -100px 0px",
-    threshold: [0.5],
-  };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(observerCallback, options);
-    elementsRef.current.forEach((el) => observer.observe(el));
-
-    return () => {
-      elementsRef.current.forEach((el) => observer.unobserve(el));
-    };
-  }, [sortedMeals, categories]);
 
   const scrollIntoSection = (
     e: React.MouseEvent<HTMLButtonElement>,
@@ -83,15 +51,12 @@ const Order: FC<OrderProps> = ({ mealsOrigin }) => {
             <OrderCategories
               categories={categories}
               onClick={scrollIntoSection}
-              visibleCategory={visibleCategory}
             />
           </SidePanel>
           <Menu
             origin={mealsOrigin}
             meals={sortedMeals}
             categories={categories}
-            addEl={addToObserve}
-            refArr={elementsRef}
           />
           <SidePanel title="Cart">
             <div></div>

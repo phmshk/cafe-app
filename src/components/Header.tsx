@@ -2,7 +2,6 @@ import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "./Modal/Modal";
 import { FC, useState } from "react";
-import SidePanel from "./SidePanel";
 
 const Header: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

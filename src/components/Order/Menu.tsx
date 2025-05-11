@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import MealCard from "../MealCard";
 import { SortedMealsObj } from "../../types/meal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,16 +12,15 @@ import {
   ReviewData,
 } from "../../utils/review";
 import { faker } from "@faker-js/faker";
+import MenuSection from "./MenuSection";
 
 interface MenuProps {
   meals: SortedMealsObj;
   categories: string[];
   origin: string;
-  addEl: (el: HTMLElement, refArr: React.RefObject<HTMLElement[]>) => void;
-  refArr: React.RefObject<HTMLElement[]>;
 }
 
-const Menu: FC<MenuProps> = ({ origin, meals, categories, addEl, refArr }) => {
+const Menu: FC<MenuProps> = ({ origin, meals, categories }) => {
   const ratingContainerClasses =
     "flex items-center gap-4 shadow p-2 bg-white/50 hover:bg-white/80 rounded-2xl max-w-28 cursor-pointer";
 
@@ -79,19 +78,11 @@ const Menu: FC<MenuProps> = ({ origin, meals, categories, addEl, refArr }) => {
         </div>
 
         {categories.map((category) => (
-          <div
-            key={category}
-            className="mb-8 scroll-mt-20"
-            id={category.toLocaleLowerCase()}
-            ref={(el) => addEl(el!, refArr)}
-          >
-            <h3 className="text-xl font-bold my-4">{category}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto">
-              {meals[category].map((meal) => (
-                <MealCard meal={meal} key={meal.idMeal} />
-              ))}
-            </div>
-          </div>
+          <MenuSection category={category} key={category}>
+            {meals[category].map((meal) => (
+              <MealCard meal={meal} key={meal.idMeal} />
+            ))}
+          </MenuSection>
         ))}
       </div>
     </>

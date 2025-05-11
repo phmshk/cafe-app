@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { fetchMealData, fetchMealsByArea } from "../API/mealService";
 import { Meal } from "../types/meal";
 import { setMealPrice } from "../utils/mealUtils";
-import useMealData from "./useMealData";
 
 type UseMealsDataResult = {
   meals: Meal[];

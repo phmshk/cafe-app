@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
-import { Meal } from "../../types/meal";
-import { getMealIngredients } from "../../utils/mealUtils";
+import { Meal } from "../../../types/meal";
+import { getMealIngredients } from "../../../utils/mealUtils";
 
 interface DesktopModalContentProps {
   meal: Meal;

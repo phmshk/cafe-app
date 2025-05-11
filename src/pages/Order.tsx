@@ -3,10 +3,10 @@ import Menu from "../components/Order/Menu";
 import SidePanel from "../components/SidePanel";
 import Wrapper from "../components/Wrapper";
 import OrderCategories from "../components/Order/OrderCategories";
-import LoadingSpinner from "../components/LoadingSpinner";
 import useMealsData from "../hooks/useMealsData";
 import { getMealCategories, sortMealsByCategory } from "../utils/mealUtils";
 import { SortedMealsObj } from "../types/meal";
+import OrderCart from "../components/Cart/OrderCart";
 
 interface OrderProps {
   mealsOrigin: string;
@@ -34,17 +34,27 @@ const Order: FC<OrderProps> = ({ mealsOrigin }) => {
   };
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return (
+      <div className="mt-16 mb-4 ">
+        <Wrapper>
+          <div className="flex gap-4 py-4 relative">
+            <div className="skeleton p-4 rounded-2xl w-64 h-[calc(100dvh-5rem)]"></div>
+            <div className="skeleton p-4 rounded-2xl w-full"></div>
+            <div className="skeleton p-4 rounded-2xl w-64 h-[calc(100dvh-5rem)]"></div>
+          </div>
+        </Wrapper>
+      </div>
+    );
   }
   if (error) {
-    return <div>An Error Occured: {error}</div>;
+    return <div className="mt-16 mb-4">An Error Occured: {error}</div>;
   }
   if (!meals || meals.length === 0) {
-    return <div>No meals found</div>;
+    return <div className="mt-16 mb-4">No meals found</div>;
   }
 
   return (
-    <div className="mt-16">
+    <div className="mt-16 mb-4">
       <Wrapper>
         <div className="flex gap-4 py-4 relative">
           <SidePanel title="Categories">
@@ -59,7 +69,7 @@ const Order: FC<OrderProps> = ({ mealsOrigin }) => {
             categories={categories}
           />
           <SidePanel title="Cart">
-            <div></div>
+            <OrderCart items={meals} />
           </SidePanel>
         </div>
       </Wrapper>

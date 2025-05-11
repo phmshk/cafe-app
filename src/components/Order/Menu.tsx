@@ -1,5 +1,5 @@
 import { FC, useMemo, useState } from "react";
-import MealCard from "../MealCard";
+import MealCard from "../Meal/MealCard";
 import { SortedMealsObj } from "../../types/meal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStarHalfStroke } from "@fortawesome/free-solid-svg-icons";

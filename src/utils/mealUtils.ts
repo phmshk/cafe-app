@@ -38,6 +38,7 @@ export function setMealPrice(meal: Meal): Meal {
 export function getMealCategories(meals: Meal[]): string[] {
   const categories = meals.map((meal) => meal.strCategory);
   const filteredCategories = [...new Set(categories)].sort();
+
   return filteredCategories;
 }
 

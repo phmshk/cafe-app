@@ -17,3 +17,8 @@ export interface MealApiResponse {
 export type SortedMealsObj = {
   [key: string]: Meal[];
 };
+
+export type CartMealObj = {
+  meal: Meal;
+  qty: number;
+};

@@ -1,4 +1,4 @@
-import { Meal, SortedMealsObj } from "../types/meal";
+import { CartMealObj, Meal, SortedMealsObj } from "../types/meal";
 import { faker } from "@faker-js/faker";
 
 export function getMealIngredients(
@@ -52,4 +52,21 @@ export function sortMealsByCategory(meals: Meal[]) {
     }
   });
   return sortedObj;
+}
+
+export function multiplyMealPriceBy(x: number, mealPrice: string) {
+  return (
+    mealPrice?.slice(0, 1) +
+    "" +
+    (Number(mealPrice?.slice(1, mealPrice.length)) * x).toFixed(2)
+  );
+}
+
+export function calcCartPrice(cart: CartMealObj[]) {
+  let sum = 0;
+  cart.forEach((item) => {
+    sum += Number(multiplyMealPriceBy(item.qty, item.meal.mealPrice!).slice(1));
+  });
+
+  return Number(sum.toFixed(2));
 }

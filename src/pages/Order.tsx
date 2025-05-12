@@ -40,7 +40,6 @@ const Order: FC<OrderProps> = ({ mealsOrigin }) => {
           <div className="flex gap-4 py-4 relative">
             <div className="skeleton p-4 rounded-2xl w-64 h-[calc(100dvh-5rem)]"></div>
             <div className="skeleton p-4 rounded-2xl w-full"></div>
-            <div className="skeleton p-4 rounded-2xl w-64 h-[calc(100dvh-5rem)]"></div>
           </div>
         </Wrapper>
       </div>
@@ -68,9 +67,6 @@ const Order: FC<OrderProps> = ({ mealsOrigin }) => {
             meals={sortedMeals}
             categories={categories}
           />
-          <SidePanel title="Cart">
-            <OrderCart items={meals} />
-          </SidePanel>
         </div>
       </Wrapper>
     </div>

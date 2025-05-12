@@ -1,14 +1,24 @@
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "./Modal/Modal";
-import { FC, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
+import OrderCart from "./Cart/OrderCart";
+import { OrderContext } from "./Context/OrderContext";
+import { calcCartPrice } from "../utils/mealUtils";
 
 const Header: FC = () => {
+  const { cartItems } = useContext(OrderContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const onClick = () => {
     setIsModalOpen(false);
     document.body.classList.toggle("scrolling-disabled");
   };
+  const [cartPrice, setCartPrice] = useState(0);
+
+  useEffect(() => {
+    const cart = calcCartPrice(cartItems);
+    setCartPrice(cart);
+  }, [cartItems]);
 
   return (
     <div className="navbar bg-base-100 shadow-sm flex justify-between items-center fixed top-0 left-0 right-0 z-10">
@@ -31,14 +41,14 @@ const Header: FC = () => {
           className="btn btn-outline relative"
           onClick={() => setIsModalOpen(true)}
         >
-          <FontAwesomeIcon icon={faCartShopping} /> 0.00
+          <FontAwesomeIcon icon={faCartShopping} /> {cartPrice}
         </div>
         <Modal
           isOpen={isModalOpen}
           onClick={onClick}
           modalContentStyles="absolute top-16 right-28 max-w-1/5"
         >
-          <div>Cart</div>
+          <OrderCart />
         </Modal>
         <div role="button" className="btn btn-outline">
           Log In

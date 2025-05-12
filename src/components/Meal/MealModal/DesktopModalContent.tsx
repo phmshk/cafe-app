@@ -1,6 +1,9 @@
 import { FC, useState } from "react";
 import { Meal } from "../../../types/meal";
-import { getMealIngredients } from "../../../utils/mealUtils";
+import {
+  getMealIngredients,
+  multiplyMealPriceBy,
+} from "../../../utils/mealUtils";
 
 interface DesktopModalContentProps {
   meal: Meal;
@@ -21,12 +24,9 @@ const DesktopModalContent: FC<DesktopModalContentProps> = ({ meal }) => {
         <h2 className="card-title text-2xl">{meal.strMeal}</h2>
         <div className="flex justify-start items-center gap-4 max-w-xl">
           <p className="text-accent text-xl grow-0 w-24">
-            {meal.mealPrice?.slice(0, 1) +
-              "" +
-              (
-                Number(meal.mealPrice?.slice(1, meal.mealPrice.length)) *
-                counter
-              ).toFixed(2)}
+            {meal.mealPrice
+              ? multiplyMealPriceBy(counter, meal.mealPrice)
+              : "No price found for this item"}
           </p>
           <div className="flex justify-between items-center rounded-xl w-40 h-12 bg-base-300">
             <button

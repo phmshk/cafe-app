@@ -26,12 +26,13 @@ export function getMealIngredients(
 export function setMealPrice(meal: Meal): Meal {
   return {
     ...meal,
-    mealPrice: faker.commerce.price({
-      min: 5,
-      max: 15,
-      dec: 2,
-      symbol: "€",
-    }),
+    mealPrice: Number(
+      faker.commerce.price({
+        min: 5,
+        max: 15,
+        dec: 2,
+      })
+    ),
   };
 }
 
@@ -54,19 +55,24 @@ export function sortMealsByCategory(meals: Meal[]) {
   return sortedObj;
 }
 
-export function multiplyMealPriceBy(x: number, mealPrice: string) {
-  return (
-    mealPrice?.slice(0, 1) +
-    "" +
-    (Number(mealPrice?.slice(1, mealPrice.length)) * x).toFixed(2)
-  );
+export function multiplyMealPriceBy(x: number, mealPrice: number) {
+  return mealPrice * x;
 }
 
 export function calcCartPrice(cart: CartMealObj[]) {
   let sum = 0;
   cart.forEach((item) => {
-    sum += Number(multiplyMealPriceBy(item.qty, item.meal.mealPrice!).slice(1));
+    sum += multiplyMealPriceBy(item.qty, item.meal.mealPrice!);
   });
 
   return Number(sum.toFixed(2));
+}
+
+export function getFormattedMealPrice(price: number): string {
+  const intl = new Intl.NumberFormat("de-DE", {
+    style: "currency",
+    currency: "EUR",
+  });
+
+  return intl.format(price);
 }

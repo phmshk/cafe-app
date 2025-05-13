@@ -4,7 +4,7 @@ import Modal from "./Modal/Modal";
 import { FC, useContext, useEffect, useState } from "react";
 import OrderCart from "./Cart/OrderCart";
 import { OrderContext } from "./Context/OrderContext";
-import { calcCartPrice } from "../utils/mealUtils";
+import { calcCartPrice, getFormattedMealPrice } from "../utils/mealUtils";
 
 const Header: FC = () => {
   const { cartItems } = useContext(OrderContext);
@@ -41,12 +41,13 @@ const Header: FC = () => {
           className="btn btn-outline relative"
           onClick={() => setIsModalOpen(true)}
         >
-          <FontAwesomeIcon icon={faCartShopping} /> {cartPrice}
+          <FontAwesomeIcon icon={faCartShopping} />{" "}
+          {getFormattedMealPrice(cartPrice)}
         </div>
         <Modal
           isOpen={isModalOpen}
           onClick={onClick}
-          modalContentStyles="absolute top-16 right-28 max-w-1/5"
+          modalContentStyles="absolute top-16 right-28 max-w-1/4"
         >
           <OrderCart />
         </Modal>

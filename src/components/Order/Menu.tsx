@@ -67,12 +67,12 @@ const Menu: FC<MenuProps> = ({ origin, meals, categories }) => {
             className={ratingContainerClasses}
             onClick={() => setIsModalOpen(true)}
           >
-            <div className="text-shadow-base-300 text-3xl">
+            <div className="text-3xl">
               <FontAwesomeIcon icon={faStarHalfStroke} />
             </div>
             <div className="flex flex-col">
               <div className="text-primary">{restaurantScore}</div>
-              <div className="">{totalReviews}</div>
+              <div className="text-primary/50">{totalReviews}</div>
             </div>
           </div>
         </div>

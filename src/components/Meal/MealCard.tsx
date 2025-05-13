@@ -4,6 +4,7 @@ import MobileModalContent from "./MealModal/MobileModalContent";
 import DesktopModalContent from "./MealModal/DesktopModalContent";
 import { CartMealObj, Meal } from "../../types/meal";
 import { OrderContext } from "../Context/OrderContext";
+import { getFormattedMealPrice } from "../../utils/mealUtils";
 
 interface MealProps {
   meal: Meal;
@@ -64,7 +65,9 @@ const MealCard: FC<MealProps> = ({ meal }) => {
         <div className="card-body items-left text-left flex flex-col">
           <h2 className="card-title line-clamp-2">{meal.strMeal}</h2>
           <div className="mt-auto">
-            <p className="text-accent text-xl mb-0.5">{meal.mealPrice}</p>
+            <p className="text-accent text-xl mb-0.5">
+              {getFormattedMealPrice(meal.mealPrice!)}
+            </p>
             <div className="card-actions">
               <button className="btn btn-primary w-full" onClick={handleCart}>
                 + Add to Cart

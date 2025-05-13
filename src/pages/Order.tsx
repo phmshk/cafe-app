@@ -55,7 +55,7 @@ const Order: FC<OrderProps> = ({ mealsOrigin }) => {
   return (
     <div className="mt-16 mb-4">
       <Wrapper>
-        <div className="flex gap-4 py-4 relative">
+        <div className="flex gap-8 py-4 relative">
           <SidePanel title="Categories">
             <OrderCategories
               categories={categories}

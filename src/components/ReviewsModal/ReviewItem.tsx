@@ -12,7 +12,7 @@ const Review: FC<ReviewProps> = ({ name, date, rating, comment }) => {
   return (
     <div>
       <div className="divider"></div>
-      <div>
+      <div className="">
         <h3>{name}</h3>
         <span>
           {date.toLocaleDateString("en-US", {

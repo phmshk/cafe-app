@@ -1,9 +1,10 @@
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import { Meal } from "../../../types/meal";
 import {
   getMealIngredients,
   multiplyMealPriceBy,
 } from "../../../utils/mealUtils";
+import { OrderContext } from "../../Context/OrderContext";
 
 interface DesktopModalContentProps {
   meal: Meal;
@@ -14,6 +15,8 @@ const DesktopModalContent: FC<DesktopModalContentProps> = ({ meal }) => {
 
   const increaseCount = () => setCounter((count) => count + 1);
   const decreaseCount = () => setCounter((count) => count - 1);
+
+  const { cartItems, setCartItems } = useContext(OrderContext);
 
   return (
     <div className="card card-side bg-base-100 shadow-sm">
@@ -43,7 +46,10 @@ const DesktopModalContent: FC<DesktopModalContentProps> = ({ meal }) => {
               +
             </button>
           </div>
-          <button className="btn btn-outline btn-primary rounded-xl">
+          <button
+            onClick={() => setCartItems([...cartItems, { meal, qty: counter }])}
+            className="btn btn-outline btn-primary rounded-xl"
+          >
             + Add to Cart
           </button>
         </div>

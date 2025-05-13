@@ -47,7 +47,7 @@ const ReviewsContent: FC<ReviewsContentProps> = ({
           </div>
         </div>
         <div className="flex justify-center flex-col">
-          <h3 className="text-center text-5xl font-extrabold mt-8">
+          <h3 className="text-center text-5xl font-extrabold mt-8 text-black">
             {restaurantScore}
           </h3>
           <span className="text-neutral/50 text-center font-light text-sm">
@@ -60,7 +60,7 @@ const ReviewsContent: FC<ReviewsContentProps> = ({
           <h2>Reviews</h2>
           <select
             name="reviews"
-            className="bg-base-300 rounded-2xl px-4 py-2 cursor-pointer"
+            className="text-black rounded-2xl px-4 py-2 cursor-pointer bg-base-300"
             value={sortType}
             onChange={(e) => setSortType(e.target.value)}
           >

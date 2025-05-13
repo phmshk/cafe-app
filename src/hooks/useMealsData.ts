@@ -18,6 +18,7 @@ function useMealsData(area: string): UseMealsDataResult {
     const meals = await fetchMealsByArea(area);
     return meals;
   };
+
   const loadMealData = async (id: string) => {
     const mealData = await fetchMealData(id);
     const mealWithPrice = setMealPrice(mealData);
@@ -35,6 +36,8 @@ function useMealsData(area: string): UseMealsDataResult {
             return result;
           })
         );
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
         setMeals(fullData);
       } catch (error) {
         setError(error instanceof Error ? error.message : String(error));
@@ -45,6 +48,7 @@ function useMealsData(area: string): UseMealsDataResult {
 
     fetchData();
   }, []);
+
   return { meals, isLoading, error };
 }
 export default useMealsData;

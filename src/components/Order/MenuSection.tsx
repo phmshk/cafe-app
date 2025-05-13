@@ -38,7 +38,7 @@ const MenuSection: FC<MenuSectionProps> = ({ category, children }) => {
       id={category.toLocaleLowerCase()}
       ref={sectionRef}
     >
-      <h3 className="text-xl font-bold my-4">{category}</h3>
+      <h3 className="text-3xl font-bold my-4">{category}</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto">
         {children}
       </div>

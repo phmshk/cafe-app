@@ -1,8 +1,10 @@
-import { FC, useEffect, useState } from "react";
-import Modal from "./Modal/Modal";
+import { FC, useContext, useEffect, useState } from "react";
+import Modal from "../Modal/Modal";
 import MobileModalContent from "./MealModal/MobileModalContent";
 import DesktopModalContent from "./MealModal/DesktopModalContent";
-import { Meal } from "../types/meal";
+import { CartMealObj, Meal } from "../../types/meal";
+import { OrderContext } from "../Context/OrderContext";
+import { getFormattedMealPrice } from "../../utils/mealUtils";
 
 interface MealProps {
   meal: Meal;
@@ -12,6 +14,28 @@ const MealCard: FC<MealProps> = ({ meal }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobileDevice, setIsMobileDevice] = useState(true);
 
+  const { cartItems, setCartItems } = useContext(OrderContext);
+
+  const handleCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const getCartUpdate = (prev: CartMealObj[]) => {
+      const existingItem = prev.find(
+        (item) => item.meal.idMeal === meal.idMeal
+      );
+
+      if (existingItem) {
+        return prev.map((item) =>
+          item.meal.idMeal === meal.idMeal
+            ? { ...item, qty: item.qty + 1 }
+            : item
+        );
+      } else {
+        return [...prev, { meal, qty: 1 }];
+      }
+    };
+    const newCart = getCartUpdate(cartItems);
+    setCartItems(newCart);
+  };
   useEffect(() => {
     const checkDeviceType = () =>
       setIsMobileDevice(window.matchMedia("(max-width: 768px)").matches);
@@ -41,12 +65,11 @@ const MealCard: FC<MealProps> = ({ meal }) => {
         <div className="card-body items-left text-left flex flex-col">
           <h2 className="card-title line-clamp-2">{meal.strMeal}</h2>
           <div className="mt-auto">
-            <p className="text-accent text-xl mb-0.5">{meal.mealPrice}</p>
+            <p className="text-accent text-xl mb-0.5">
+              {getFormattedMealPrice(meal.mealPrice!)}
+            </p>
             <div className="card-actions">
-              <button
-                className="btn btn-primary w-full"
-                onClick={(e) => e.stopPropagation()}
-              >
+              <button className="btn btn-primary w-full" onClick={handleCart}>
                 + Add to Cart
               </button>
             </div>

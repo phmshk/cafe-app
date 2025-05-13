@@ -6,11 +6,18 @@ import OrderProvider from "./components/Context/OrderContextProvider";
 function App() {
   return (
     <>
-      <Header />
       <OrderProvider>
-        <Order mealsOrigin={"Italian"} />
+        <header>
+          <Header />
+        </header>
+        <main>
+          <Order mealsOrigin={"Italian"} />
+        </main>
       </OrderProvider>
-      <Footer />
+
+      <footer>
+        <Footer />
+      </footer>
     </>
   );
 }

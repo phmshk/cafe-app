@@ -36,6 +36,7 @@ const MealCard: FC<MealProps> = ({ meal }) => {
     const newCart = getCartUpdate(cartItems);
     setCartItems(newCart);
   };
+
   useEffect(() => {
     const checkDeviceType = () =>
       setIsMobileDevice(window.matchMedia("(max-width: 768px)").matches);
@@ -79,7 +80,7 @@ const MealCard: FC<MealProps> = ({ meal }) => {
       <Modal
         isOpen={isModalOpen}
         isMobileDevice={isMobileDevice}
-        onClick={onClose}
+        handleModalClose={onClose}
       >
         {isMobileDevice ? (
           <MobileModalContent meal={meal} onClick={onClose} />

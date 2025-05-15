@@ -7,24 +7,28 @@ import { OrderContext } from "./Context/OrderContext";
 import { calcCartPrice, getFormattedMealPrice } from "../utils/mealUtils";
 
 const Header: FC = () => {
-  const { cartItems } = useContext(OrderContext);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const onClick = () => {
-    setIsModalOpen(false);
-    document.body.classList.toggle("scrolling-disabled");
-  };
-  const [cartPrice, setCartPrice] = useState(0);
+  const { cartItems } = useContext(OrderContext); //getting cart items from context
+  const [isModalOpen, setIsModalOpen] = useState(false); //state to monitor if modal is opened
 
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    document.body.classList.remove("scrolling-disabled"); //remove class disabling page scrolling
+  };
+
+  const [cartPrice, setCartPrice] = useState(0); //state to monitor total cart price
+
+  //runs on every update of cart
   useEffect(() => {
-    const cart = calcCartPrice(cartItems);
-    setCartPrice(cart);
+    const cartPrice = calcCartPrice(cartItems);
+    setCartPrice(cartPrice);
   }, [cartItems]);
 
   return (
     <div className="navbar bg-base-100 shadow-sm flex justify-between items-center fixed top-0 left-0 right-0 z-10">
-      <div className="flex gap-8 justify-between items-center">
+      <div className="flex gap-8 justify-between items-center ml-8">
         <div>
           <a href="#" className="text-xl cursor-pointer">
+            {/* Header logo */}
             DH
           </a>
         </div>
@@ -34,19 +38,19 @@ const Header: FC = () => {
           className="input input-bordered w-48 md:w-64"
         />
       </div>
-      <div className="flex gap-4 mr-4">
+      <div className="flex gap-4 mr-8">
         <div
           tabIndex={0}
           role="button"
           className="btn btn-outline relative"
           onClick={() => setIsModalOpen(true)}
         >
-          <FontAwesomeIcon icon={faCartShopping} />{" "}
-          {getFormattedMealPrice(cartPrice)}
+          <FontAwesomeIcon icon={faCartShopping} />
+          {" " + getFormattedMealPrice(cartPrice)}
         </div>
         <Modal
           isOpen={isModalOpen}
-          onClick={onClick}
+          handleModalClose={handleModalClose}
           modalContentStyles="absolute top-16 right-28 max-w-1/4"
         >
           <OrderCart />

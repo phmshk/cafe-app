@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 interface ModalProps {
   isOpen: boolean;
-  onClick: () => void;
+  handleModalClose: () => void;
   children: ReactNode;
   isMobileDevice?: boolean;
   modalContentStyles?: string;
@@ -11,30 +11,32 @@ interface ModalProps {
 
 const Modal: FC<ModalProps> = ({
   isOpen,
-  onClick,
+  handleModalClose,
   children,
   isMobileDevice,
   modalContentStyles,
 }) => {
+  //Close modal if Esc was clicked.
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
-        onClick();
+        handleModalClose();
       }
     };
 
     if (isOpen) {
       document.addEventListener("keydown", handleEsc);
-      document.body.classList.toggle("scrolling-disabled");
+      document.body.classList.add("scrolling-disabled");
     }
 
     return () => document.removeEventListener("keydown", handleEsc);
-  }, [isOpen, onClick]);
+  }, [isOpen]);
 
+  //Close modal when clicking outside of modal.
   const handleOverlayClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
-      onClick();
+      handleModalClose();
     }
   };
 

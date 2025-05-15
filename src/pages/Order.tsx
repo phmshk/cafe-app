@@ -6,7 +6,6 @@ import OrderCategories from "../components/Order/OrderCategories";
 import useMealsData from "../hooks/useMealsData";
 import { getMealCategories, sortMealsByCategory } from "../utils/mealUtils";
 import { SortedMealsObj } from "../types/meal";
-import OrderCart from "../components/Cart/OrderCart";
 
 interface OrderProps {
   mealsOrigin: string;

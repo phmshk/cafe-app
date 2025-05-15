@@ -1,6 +1,7 @@
 import { FC, useContext, useState } from "react";
-import { Meal } from "../../../types/meal";
+import { CartMealObj, Meal } from "../../../types/meal";
 import {
+  getFormattedMealPrice,
   getMealIngredients,
   multiplyMealPriceBy,
 } from "../../../utils/mealUtils";
@@ -18,6 +19,26 @@ const DesktopModalContent: FC<DesktopModalContentProps> = ({ meal }) => {
 
   const { cartItems, setCartItems } = useContext(OrderContext);
 
+  const handleCart = () => {
+    const getCartUpdate = (prev: CartMealObj[]) => {
+      const existingItem = prev.find(
+        (item) => item.meal.idMeal === meal.idMeal
+      );
+
+      if (existingItem) {
+        return prev.map((item) =>
+          item.meal.idMeal === meal.idMeal
+            ? { ...item, qty: item.qty + 1 }
+            : item
+        );
+      } else {
+        return [...prev, { meal, qty: 1 }];
+      }
+    };
+    const newCart = getCartUpdate(cartItems);
+    setCartItems(newCart);
+  };
+
   return (
     <div className="card card-side bg-base-100 shadow-sm">
       <figure className="max-w-80">
@@ -28,7 +49,9 @@ const DesktopModalContent: FC<DesktopModalContentProps> = ({ meal }) => {
         <div className="flex justify-start items-center gap-4 max-w-xl">
           <p className="text-accent text-xl grow-0 w-24">
             {meal.mealPrice
-              ? multiplyMealPriceBy(counter, meal.mealPrice)
+              ? getFormattedMealPrice(
+                  multiplyMealPriceBy(counter, meal.mealPrice)
+                )
               : "No price found for this item"}
           </p>
           <div className="flex justify-between items-center rounded-xl w-40 h-12 bg-base-300">
@@ -47,7 +70,7 @@ const DesktopModalContent: FC<DesktopModalContentProps> = ({ meal }) => {
             </button>
           </div>
           <button
-            onClick={() => setCartItems([...cartItems, { meal, qty: counter }])}
+            onClick={handleCart}
             className="btn btn-outline btn-primary rounded-xl"
           >
             + Add to Cart

@@ -34,7 +34,6 @@ const OrderCart: FC = () => {
    * @returns void
    */
   const changeItemQty = (item: CartMealObj, sign: "+" | "-"): void => {
-    console.log("clicked");
     const newItem =
       sign === "+"
         ? { ...item, qty: item.qty + 1 }

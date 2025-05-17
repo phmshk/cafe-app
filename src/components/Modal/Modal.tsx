@@ -1,8 +1,8 @@
-import { FC, ReactNode, useEffect } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
 interface ModalProps {
-  isOpen: boolean;
+  isModalOpen: boolean;
   handleModalClose: () => void;
   children: ReactNode;
   isMobileDevice?: boolean;
@@ -10,7 +10,7 @@ interface ModalProps {
 }
 
 const Modal: FC<ModalProps> = ({
-  isOpen,
+  isModalOpen,
   handleModalClose,
   children,
   isMobileDevice,
@@ -25,13 +25,13 @@ const Modal: FC<ModalProps> = ({
       }
     };
 
-    if (isOpen) {
+    if (isModalOpen) {
       document.addEventListener("keydown", handleEsc);
       document.body.classList.add("scrolling-disabled");
     }
 
     return () => document.removeEventListener("keydown", handleEsc);
-  }, [isOpen]);
+  }, [isModalOpen]);
 
   //Close modal when clicking outside of modal.
   const handleOverlayClick = (e: React.MouseEvent) => {
@@ -40,7 +40,7 @@ const Modal: FC<ModalProps> = ({
     }
   };
 
-  if (!isOpen) {
+  if (!isModalOpen) {
     return null;
   }
 

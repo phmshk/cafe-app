@@ -2,38 +2,26 @@ import { FC, useContext, useEffect, useState } from "react";
 import Modal from "../Modal/Modal";
 import MobileModalContent from "./MealModal/MobileModalContent";
 import DesktopModalContent from "./MealModal/DesktopModalContent";
-import { CartMealObj, Meal } from "../../types/meal";
+import { Meal } from "../../types/meal";
 import { OrderContext } from "../Context/OrderContext";
 import { getFormattedMealPrice } from "../../utils/mealUtils";
+import useModalHandler from "../../hooks/useModalHandler";
+import { getCartUpdate } from "../../utils/cartUtils";
 
 interface MealProps {
   meal: Meal;
 }
 
 const MealCard: FC<MealProps> = ({ meal }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobileDevice, setIsMobileDevice] = useState(true);
-
   const { cartItems, setCartItems } = useContext(OrderContext);
 
-  const handleCart = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    const getCartUpdate = (prev: CartMealObj[]) => {
-      const existingItem = prev.find(
-        (item) => item.meal.idMeal === meal.idMeal
-      );
+  const { isModalOpen, setIsModalOpen, handleModalClose } = useModalHandler();
 
-      if (existingItem) {
-        return prev.map((item) =>
-          item.meal.idMeal === meal.idMeal
-            ? { ...item, qty: item.qty + 1 }
-            : item
-        );
-      } else {
-        return [...prev, { meal, qty: 1 }];
-      }
-    };
-    const newCart = getCartUpdate(cartItems);
+  const addItemToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    const newCart = getCartUpdate(cartItems, meal, 1);
     setCartItems(newCart);
   };
 
@@ -44,11 +32,6 @@ const MealCard: FC<MealProps> = ({ meal }) => {
     window.addEventListener("resize", checkDeviceType);
     return () => window.removeEventListener("resize", checkDeviceType);
   }, []);
-
-  const onClose = () => {
-    document.body.classList.toggle("scrolling-disabled");
-    setIsModalOpen(false);
-  };
 
   return (
     <>
@@ -70,7 +53,10 @@ const MealCard: FC<MealProps> = ({ meal }) => {
               {getFormattedMealPrice(meal.mealPrice!)}
             </p>
             <div className="card-actions">
-              <button className="btn btn-primary w-full" onClick={handleCart}>
+              <button
+                className="btn btn-primary w-full"
+                onClick={addItemToCart}
+              >
                 + Add to Cart
               </button>
             </div>
@@ -78,12 +64,12 @@ const MealCard: FC<MealProps> = ({ meal }) => {
         </div>
       </div>
       <Modal
-        isOpen={isModalOpen}
+        isModalOpen={isModalOpen}
         isMobileDevice={isMobileDevice}
-        handleModalClose={onClose}
+        handleModalClose={handleModalClose}
       >
         {isMobileDevice ? (
-          <MobileModalContent meal={meal} onClick={onClose} />
+          <MobileModalContent meal={meal} onClick={handleModalClose} />
         ) : (
           <DesktopModalContent meal={meal} />
         )}

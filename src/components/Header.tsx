@@ -5,15 +5,11 @@ import { FC, useContext, useEffect, useState } from "react";
 import OrderCart from "./Cart/OrderCart";
 import { OrderContext } from "./Context/OrderContext";
 import { calcCartPrice, getFormattedMealPrice } from "../utils/mealUtils";
+import useModalHandler from "../hooks/useModalHandler";
 
 const Header: FC = () => {
   const { cartItems } = useContext(OrderContext); //getting cart items from context
-  const [isModalOpen, setIsModalOpen] = useState(false); //state to monitor if modal is opened
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-    document.body.classList.remove("scrolling-disabled"); //remove class disabling page scrolling
-  };
+  const { isModalOpen, setIsModalOpen, handleModalClose } = useModalHandler();
 
   const [cartPrice, setCartPrice] = useState(0); //state to monitor total cart price
 
@@ -49,7 +45,7 @@ const Header: FC = () => {
           {" " + getFormattedMealPrice(cartPrice)}
         </div>
         <Modal
-          isOpen={isModalOpen}
+          isModalOpen={isModalOpen}
           handleModalClose={handleModalClose}
           modalContentStyles="absolute top-16 right-28 max-w-1/4"
         >

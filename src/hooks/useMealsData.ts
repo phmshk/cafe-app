@@ -9,6 +9,11 @@ type UseMealsDataResult = {
   error: string | null;
 };
 
+/**
+ * Hook to get array of meals and states if it is loading or an error occured
+ * @param area Location of meals as string e.g. "American", "British", "Canadian", "Italian" etc. full list at https://www.themealdb.com/api/json/v1/1/list.php?a=list
+ * @returns Object consisting of Meals array, isLoading state and error | null
+ */
 function useMealsData(area: string): UseMealsDataResult {
   const [meals, setMeals] = useState<Meal[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -36,7 +41,7 @@ function useMealsData(area: string): UseMealsDataResult {
             return result;
           })
         );
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 500)); // 500ms delay
 
         setMeals(fullData);
       } catch (error) {

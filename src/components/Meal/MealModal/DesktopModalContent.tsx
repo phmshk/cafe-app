@@ -1,11 +1,12 @@
 import { FC, useContext, useState } from "react";
-import { CartMealObj, Meal } from "../../../types/meal";
+import { Meal } from "../../../types/meal";
 import {
   getFormattedMealPrice,
   getMealIngredients,
   multiplyMealPriceBy,
 } from "../../../utils/mealUtils";
 import { OrderContext } from "../../Context/OrderContext";
+import { getCartUpdate } from "../../../utils/cartUtils";
 
 interface DesktopModalContentProps {
   meal: Meal;
@@ -20,23 +21,9 @@ const DesktopModalContent: FC<DesktopModalContentProps> = ({ meal }) => {
   const { cartItems, setCartItems } = useContext(OrderContext);
 
   const handleCart = () => {
-    const getCartUpdate = (prev: CartMealObj[]) => {
-      const existingItem = prev.find(
-        (item) => item.meal.idMeal === meal.idMeal
-      );
-
-      if (existingItem) {
-        return prev.map((item) =>
-          item.meal.idMeal === meal.idMeal
-            ? { ...item, qty: item.qty + 1 }
-            : item
-        );
-      } else {
-        return [...prev, { meal, qty: 1 }];
-      }
-    };
-    const newCart = getCartUpdate(cartItems);
+    const newCart = getCartUpdate(cartItems, meal, counter);
     setCartItems(newCart);
+    setCounter(1);
   };
 
   return (
@@ -56,6 +43,7 @@ const DesktopModalContent: FC<DesktopModalContentProps> = ({ meal }) => {
           </p>
           <div className="flex justify-between items-center rounded-xl w-40 h-12 bg-base-300">
             <button
+              disabled={counter < 2}
               className="cursor-pointer active:bg-linear-to-r from-gray-300 to-base-300 w-1/3 h-full rounded-xl text-3xl"
               onClick={decreaseCount}
             >

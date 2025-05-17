@@ -6,7 +6,6 @@ import OrderCategories from "../components/Order/OrderCategories";
 import useMealsData from "../hooks/useMealsData";
 import { getMealCategories, sortMealsByCategory } from "../utils/mealUtils";
 import { SortedMealsObj } from "../types/meal";
-import OrderCart from "../components/Cart/OrderCart";
 
 interface OrderProps {
   mealsOrigin: string;
@@ -17,6 +16,7 @@ const Order: FC<OrderProps> = ({ mealsOrigin }) => {
   const [sortedMeals, setSortedMeals] = useState<SortedMealsObj>({});
   const [categories, setCategories] = useState<string[]>([]);
 
+  //Runs every time meals array updates
   useEffect(() => {
     if (meals) {
       setSortedMeals(sortMealsByCategory(meals));
@@ -24,6 +24,11 @@ const Order: FC<OrderProps> = ({ mealsOrigin }) => {
     }
   }, [meals]);
 
+  /**
+   * Function to use to scroll into a specified section on the page with the same Id as clicked area
+   * @param e Click event
+   * @param category Id of section corresponting to the name of clicked area
+   */
   const scrollIntoSection = (
     e: React.MouseEvent<HTMLButtonElement>,
     category: string
@@ -45,11 +50,17 @@ const Order: FC<OrderProps> = ({ mealsOrigin }) => {
       </div>
     );
   }
+
   if (error) {
-    return <div className="mt-16 mb-4">An Error Occured: {error}</div>;
-  }
-  if (!meals || meals.length === 0) {
-    return <div className="mt-16 mb-4">No meals found</div>;
+    return (
+      <div className="mt-16 mb-4 ">
+        <Wrapper>
+          <div className="mt-32 mb-4 h-[calc(100dvh-5rem)]">
+            An Error Occured: {error}
+          </div>
+        </Wrapper>
+      </div>
+    );
   }
 
   return (
@@ -59,7 +70,7 @@ const Order: FC<OrderProps> = ({ mealsOrigin }) => {
           <SidePanel title="Categories">
             <OrderCategories
               categories={categories}
-              onClick={scrollIntoSection}
+              scrollIntoSection={scrollIntoSection}
             />
           </SidePanel>
           <Menu

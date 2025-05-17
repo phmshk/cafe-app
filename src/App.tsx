@@ -11,7 +11,7 @@ function App() {
           <Header />
         </header>
         <main>
-          <Order mealsOrigin={"Italian"} />
+          <Order mealsOrigin={"American"} />
         </main>
       </OrderProvider>
 

@@ -3,10 +3,16 @@ import { OrderContext } from "../Context/OrderContext";
 
 interface OrderCategoriesProps {
   categories: string[];
-  onClick: (e: React.MouseEvent<HTMLButtonElement>, str: string) => void;
+  scrollIntoSection: (
+    e: React.MouseEvent<HTMLButtonElement>,
+    str: string
+  ) => void;
 }
 
-const OrderCategories: FC<OrderCategoriesProps> = ({ categories, onClick }) => {
+const OrderCategories: FC<OrderCategoriesProps> = ({
+  categories,
+  scrollIntoSection,
+}) => {
   const { currentSection } = useContext(OrderContext);
 
   return (
@@ -21,7 +27,9 @@ const OrderCategories: FC<OrderCategoriesProps> = ({ categories, onClick }) => {
             <li key={category}>
               <button
                 className={`my-2 text-left p-2 rounded-xl w-full cursor-pointer hover:bg-base-100 overflow-y-auto ${currentSectionStyle}`}
-                onClick={(e) => onClick(e, category.toLocaleLowerCase())}
+                onClick={(e) =>
+                  scrollIntoSection(e, category.toLocaleLowerCase())
+                }
               >
                 {category}
               </button>

@@ -3,13 +3,13 @@ import ReviewItem from "./ReviewItem";
 import { ReviewData } from "../../utils/review";
 
 interface ReviewsContentProps {
-  onClick: () => void;
+  handleModalClose: () => void;
   reviews: ReviewData[];
   restaurantScore: string;
   totalRatings: number;
 }
 const ReviewsContent: FC<ReviewsContentProps> = ({
-  onClick,
+  handleModalClose,
   reviews,
   restaurantScore,
   totalRatings,
@@ -41,7 +41,7 @@ const ReviewsContent: FC<ReviewsContentProps> = ({
           <div
             className="flex items-center justify-center text-base-content/50 hover:bg-base-300 w-8 h-8 rounded-box cursor-pointer"
             role="button"
-            onClick={onClick}
+            onClick={handleModalClose}
           >
             X
           </div>

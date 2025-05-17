@@ -6,9 +6,53 @@ import {
   multiplyMealPriceBy,
 } from "../../utils/mealUtils";
 import SadBagIcon from "../../assets/SadBagIcon";
+import { CartMealObj } from "../../types/meal";
 
 const OrderCart: FC = () => {
-  const { cartItems, setCartItems } = useContext(OrderContext);
+  const { cartItems, setCartItems } = useContext(OrderContext); //getting cart items from context
+
+  //Setting cart items to an empty array;
+  const emptyCart = () => {
+    setCartItems([]);
+  };
+
+  /**
+   * Function to remove item from cart.
+   * @param item object of type CartMealObj
+   */
+  const removeItemFromCart = (item: CartMealObj): void => {
+    const filteredItems = cartItems.filter(
+      (cartItem) => cartItem.meal.idMeal !== item.meal.idMeal
+    );
+    setCartItems(filteredItems);
+  };
+
+  /**
+   * Function to increase or decrease number of items in a cart.
+   * @param item object of type CartMealObj
+   * @param sign + or -
+   * @returns void
+   */
+  const changeItemQty = (item: CartMealObj, sign: "+" | "-"): void => {
+    const newItem =
+      sign === "+"
+        ? { ...item, qty: item.qty + 1 }
+        : { ...item, qty: item.qty - 1 };
+
+    if (newItem.qty < 1) {
+      removeItemFromCart(item);
+      return;
+    }
+
+    setCartItems(
+      cartItems.map((cartItem) => {
+        if (cartItem.meal.idMeal === newItem.meal.idMeal) {
+          return newItem;
+        }
+        return cartItem;
+      })
+    );
+  };
 
   if (cartItems.length === 0) {
     return (
@@ -27,7 +71,7 @@ const OrderCart: FC = () => {
       <div className="flex items-center justify-between">
         <h2>Cart</h2>
         <button
-          onClick={() => setCartItems([])}
+          onClick={emptyCart}
           className="cursor-pointer rounded-2xl py-1 px-2 hover:bg-base-300"
         >
           Empty the cart
@@ -44,16 +88,27 @@ const OrderCart: FC = () => {
             <p className="overflow-hidden line-clamp-1">{item.meal.strMeal}</p>
             <div className="flex items-center justify-between">
               <span>
-                {item.meal.mealPrice
-                  ? getFormattedMealPrice(
-                      multiplyMealPriceBy(item.qty, item.meal.mealPrice)
-                    )
-                  : "No price found for this item"}
+                {getFormattedMealPrice(
+                  multiplyMealPriceBy(item.qty, item.meal.mealPrice!)
+                )}
               </span>
-
-              <span>x{item.qty}</span>
+              <div className="flex justify-between items-center rounded-xl bg-base-300 gap-3 py-1 px-2">
+                <button
+                  onClick={() => changeItemQty(item, "-")}
+                  className="cursor-pointer"
+                >
+                  -
+                </button>
+                <span>{item.qty}</span>
+                <button
+                  onClick={() => changeItemQty(item, "+")}
+                  className="cursor-pointer"
+                >
+                  +
+                </button>
+              </div>
             </div>
-            <hr />
+            <hr className="mt-1" />
           </div>
         </div>
       ))}

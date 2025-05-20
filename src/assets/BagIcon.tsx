@@ -1,10 +1,11 @@
 import { FC } from "react";
 
-interface SadBagIconProps {
+interface BagIconProps {
   className: string;
+  type: string;
 }
 
-const SadBagIcon: FC<SadBagIconProps> = ({ className }) => (
+const BagIcon: FC<BagIconProps> = ({ className, type }) => (
   <svg
     className={className}
     width="64"
@@ -38,7 +39,7 @@ const SadBagIcon: FC<SadBagIconProps> = ({ className }) => (
       <circle cx="80" cy="100" r="5" fill="#333" />
       <circle cx="120" cy="100" r="5" fill="#333" />
       <path
-        d="M85 125 Q100 115, 115 125"
+        d={`M85 125 Q100 ${type === "sad" ? 115 : 135}, 115 125`}
         stroke="#333"
         strokeWidth="3"
         fill="none"
@@ -48,4 +49,4 @@ const SadBagIcon: FC<SadBagIconProps> = ({ className }) => (
   </svg>
 );
 
-export default SadBagIcon;
+export default BagIcon;

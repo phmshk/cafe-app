@@ -34,3 +34,19 @@ export async function fetchMealsByArea(area: string): Promise<Meal[]> {
 
   return response.data.meals;
 }
+
+/**
+ * Async Function to fetch all areas for which meals are present at https://www.themealdb.com
+ * @returns Array of all possible areas
+ */
+export async function fetchMealAreas(): Promise<string[]> {
+  const response = await axios.get(
+    "https://www.themealdb.com/api/json/v1/1/list.php?a=list"
+  );
+
+  const areas = response.data.meals.map(
+    (area: { strArea: string }) => area.strArea
+  );
+
+  return areas;
+}

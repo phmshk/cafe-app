@@ -12,7 +12,12 @@ const OrderProvider: FC<OrderProviderProps> = ({ children }) => {
 
   return (
     <OrderContext.Provider
-      value={{ currentSection, setCurrentSection, cartItems, setCartItems }}
+      value={{
+        currentSection,
+        setCurrentSection,
+        cartItems,
+        setCartItems,
+      }}
     >
       {children}
     </OrderContext.Provider>

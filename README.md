@@ -1,3 +1,3 @@
 # cafe-app
 
-Work on this project is currently paused.
+## Work on this project is currently paused.

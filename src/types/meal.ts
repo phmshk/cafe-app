@@ -7,7 +7,7 @@ export interface Meal {
   strMealThumb: string;
   [key: `strIngredient${number}`]: string | null;
   [key: `strMeasure${number}`]: string | null;
-  mealPrice?: string;
+  mealPrice?: number;
 }
 
 export interface MealApiResponse {
@@ -16,4 +16,9 @@ export interface MealApiResponse {
 
 export type SortedMealsObj = {
   [key: string]: Meal[];
+};
+
+export type CartMealObj = {
+  meal: Meal;
+  qty: number;
 };

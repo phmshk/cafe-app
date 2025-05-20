@@ -1,6 +1,9 @@
 import { FC, useRef, useEffect, useState } from "react";
-import { Meal } from "../../types/meal";
-import { getMealIngredients } from "../../utils/mealUtils";
+import { Meal } from "../../../types/meal";
+import {
+  getMealIngredients,
+  multiplyMealPriceBy,
+} from "../../../utils/mealUtils";
 
 interface MobileModalContentProps {
   meal: Meal;
@@ -79,12 +82,9 @@ const MobileModalContent: FC<MobileModalContentProps> = ({ meal, onClick }) => {
           <div className="flex justify-between items-center w-full">
             <h2 className="card-title">{meal.strMeal}</h2>
             <p className="text-accent text-xl">
-              {meal.mealPrice?.slice(0, 1) +
-                "" +
-                (
-                  Number(meal.mealPrice?.slice(1, meal.mealPrice.length)) *
-                  counter
-                ).toFixed(2)}
+              {meal.mealPrice
+                ? multiplyMealPriceBy(counter, meal?.mealPrice)
+                : "No price found for this item"}
             </p>
           </div>
           <div className="flex justify-between items-center gap-4 w-full">

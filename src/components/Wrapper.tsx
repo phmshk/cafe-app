@@ -5,7 +5,7 @@ interface WrapperProps {
 }
 
 const Wrapper: FC<WrapperProps> = ({ children }) => {
-  return <div className="mx-auto max-w-7xl px-4">{children}</div>;
+  return <div className="mx-auto w-7xl max-w-7xl px-4">{children}</div>;
 };
 
 export default Wrapper;

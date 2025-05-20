@@ -1,15 +1,16 @@
-import { FC, useContext } from "react";
+import { FC, useContext, useState } from "react";
 import { OrderContext } from "../Context/OrderContext";
 import {
   calcCartPrice,
   getFormattedMealPrice,
   multiplyMealPriceBy,
 } from "../../utils/mealUtils";
-import SadBagIcon from "../../assets/SadBagIcon";
 import { CartMealObj } from "../../types/meal";
+import BagIcon from "../../assets/BagIcon";
 
 const OrderCart: FC = () => {
   const { cartItems, setCartItems } = useContext(OrderContext); //getting cart items from context
+  const [checkedOut, setCheckedOut] = useState(false);
 
   //Setting cart items to an empty array;
   const emptyCart = () => {
@@ -54,12 +55,38 @@ const OrderCart: FC = () => {
     );
   };
 
+  const checkoutCart = () => {
+    //TODO: Create real chekcout on server;
+    emptyCart();
+    setCheckedOut(true);
+  };
+
+  //imitation of successful checkout
+  if (checkedOut) {
+    const delay = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      setCheckedOut(false);
+    };
+
+    delay();
+
+    return (
+      <div className="relative">
+        <h2>Cart</h2>
+        <div className="flex flex-col items-center">
+          <BagIcon className="w-60 h-60" type={"happy"} />
+          <h3 className="mb-8 mt-2">Thank you for your order!</h3>
+        </div>
+      </div>
+    );
+  }
+
   if (cartItems.length === 0) {
     return (
       <div className="relative">
         <h2>Cart</h2>
         <div className="flex flex-col items-center">
-          <SadBagIcon className="w-60 h-60" />
+          <BagIcon className="w-60 h-60" type={"sad"} />
           <h3 className="mb-8 mt-2">Your cart ist empty</h3>
         </div>
       </div>
@@ -118,6 +145,13 @@ const OrderCart: FC = () => {
         <h3>Total:</h3>
         <span>{getFormattedMealPrice(calcCartPrice(cartItems))}</span>
       </div>
+
+      <button
+        onClick={checkoutCart}
+        className="btn btn-outline btn-primary w-full mt-4"
+      >
+        Checkout
+      </button>
     </div>
   );
 };

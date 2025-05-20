@@ -41,7 +41,7 @@ function useMealsData(area: string): UseMealsDataResult {
             return result;
           })
         );
-        await new Promise((resolve) => setTimeout(resolve, 500)); // 500ms delay
+        //await new Promise((resolve) => setTimeout(resolve, 500)); // 500ms delay
 
         setMeals(fullData);
       } catch (error) {

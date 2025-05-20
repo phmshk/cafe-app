@@ -4,6 +4,22 @@
 }
 
 @layer components {
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+  }
+
+  #root {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+  }
+
+  main {
+    margin-top: 64px;
+  }
+
   h1 {
     @apply text-4xl;
   }

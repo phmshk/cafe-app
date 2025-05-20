@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from "react";
-import Menu from "../components/Order/Menu";
-import SidePanel from "../components/SidePanel";
-import Wrapper from "../components/Wrapper";
-import OrderCategories from "../components/Order/OrderCategories";
 import useMealsData from "../hooks/useMealsData";
-import { getMealCategories, sortMealsByCategory } from "../utils/mealUtils";
 import { SortedMealsObj } from "../types/meal";
+import { getMealCategories, sortMealsByCategory } from "../utils/mealUtils";
+import Wrapper from "../components/Wrapper";
+import SidePanel from "../components/SidePanel";
+import OrderCategories from "../components/Order/OrderCategories";
+import Menu from "../components/Order/Menu";
 
 interface OrderProps {
   mealsOrigin: string;
@@ -64,23 +64,21 @@ const Order: FC<OrderProps> = ({ mealsOrigin }) => {
   }
 
   return (
-    <div className="mt-16 mb-4">
-      <Wrapper>
-        <div className="flex gap-8 py-4 relative">
-          <SidePanel title="Categories">
-            <OrderCategories
-              categories={categories}
-              scrollIntoSection={scrollIntoSection}
-            />
-          </SidePanel>
-          <Menu
-            origin={mealsOrigin}
-            meals={sortedMeals}
+    <Wrapper>
+      <div className="flex gap-8 py-4 relative">
+        <SidePanel title="Categories">
+          <OrderCategories
             categories={categories}
+            scrollIntoSection={scrollIntoSection}
           />
-        </div>
-      </Wrapper>
-    </div>
+        </SidePanel>
+        <Menu
+          origin={mealsOrigin}
+          meals={sortedMeals}
+          categories={categories}
+        />
+      </div>
+    </Wrapper>
   );
 };
 
